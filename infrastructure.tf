@@ -41,3 +41,37 @@ resource "aws_nat_gateway" "nat_pub1" {
   allocation_id = aws_eip.eip_nat.id
   subnet_id = aws_subnet.PublicSubnet1.id
 }
+
+############################### Route Tables #############################
+resource "aws_route_table" "Public_table" {
+  vpc_id = aws_vpc.terraform_vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.my_igw.id
+  }
+}
+resource "aws_route_table_association" "pub_rt_ass_1" {
+  subnet_id      = aws_subnet.PublicSubnet1.id
+  route_table_id = aws_route_table.Public_table.id
+}
+resource "aws_route_table_association" "pub_rt_ass_2" {
+  subnet_id      = aws_subnet.PublicSubnet2.id
+  route_table_id = aws_route_table.Public_table.id
+}
+
+resource "aws_route_table" "Private_table" {
+  vpc_id = aws_vpc.terraform_vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_pub1.id
+  }
+}
+resource "aws_route_table_association" "priv_rt_ass_1" {
+  subnet_id      = aws_subnet.PrivateSubnet1.id
+  route_table_id = aws_route_table.Private_table.id
+}
+resource "aws_route_table_association" "priv_rt_ass_2" {
+  subnet_id      = aws_subnet.PrivateSubnet2.id
+  route_table_id = aws_route_table.Private_table.id
+}
+
