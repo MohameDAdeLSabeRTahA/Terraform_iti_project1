@@ -32,3 +32,12 @@ resource "aws_subnet" "PrivateSubnet2" {
   cidr_block = var.PrivateSubnet2_CIDR
   map_public_ip_on_launch = "true"
 }
+
+################################ EIP & NAT Gateway ################################
+resource "aws_eip" "eip_nat" {
+}
+
+resource "aws_nat_gateway" "nat_pub1" {
+  allocation_id = aws_eip.eip_nat.id
+  subnet_id = aws_subnet.PublicSubnet1.id
+}
