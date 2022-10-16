@@ -22,13 +22,9 @@ EOF
 }
 
 resource "aws_lambda_function" "emil_trigger_lambda" {
-  filename      = "./serverless_module/compressed_code/python_script.zip"
+  filename      = "serverless_module/compressed_code/python_script.zip"
   function_name = "email_trigger"
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = "python_script.lambda_handler"
   runtime       = "python3.9"
-
-  depends_on = [
-    aws_ses_email_identity.ses_email
-  ]
 }

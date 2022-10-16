@@ -1,1 +1,7 @@
-Terraform Project 
+- This Project Uses:
+    - [Amazon AWS](https://aws.amazon.com/) - Cloud services
+    - [Terraform](https://www.terraform.io/) - Infrastructure as a code
+- Tasks:
+    - Creating Infrastructure module that can be in other projects.
+    - Creating Serverless module using aws lambda function.
+    - Send an email if any change happens to the infrastructure.
